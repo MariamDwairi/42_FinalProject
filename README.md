@@ -1,13 +1,13 @@
 # 42_FinalProject
 
-#Team members /br
-1- Mariam Dwairi
-2- Mariam Fraihat
-3- Aya Harfoush
-4- 
-5- 
+#Team members
+* Mariam Dwairi
+*  Mariam Fraihat
+*  Aya Harfoush
+*  
+*   
 
 # Vulnerabilities chosen 
-*IDOR
-*Integer overflow 
-*Mass assignment 
+* IDOR
+* Integer overflow 
+* Mass assignment 
