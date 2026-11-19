@@ -3,18 +3,156 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IDOR Demonstration</title>
+
+    <title>IDOR Vulnerability Demo</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <link rel="stylesheet" href="./style.css" />
     <script src="./script.js" defer></script>
   </head>
+
   <body>
-    <label for="get_user">Get My Profile.</label>
-    <input
-      type="text"
-      id="get_user"
-      name="get_user"
-      placeholder="Enter User ID"
-    />
-    <button type="submit" onClick="getUserProfile()">Get Profile</button>
-    <div id="result"></div>
+    <main class="container">
+      <section class="status-panel">
+        <div class="status-info">
+          <div class="status-icon" id="statusIcon">⚠</div>
+
+          <div>
+            <h3 id="statusTitle">Vulnerability Detected</h3>
+            <p id="statusDescription">
+              Users can access other users' profiles by changing the ID.
+            </p>
+          </div>
+        </div>
+
+        <div class="toggle-container">
+          <span class="toggle-label">Vulnerability</span>
+
+          <button
+            type="button"
+            class="toggle active"
+            id="vulnerabilityToggle"
+            aria-label="Toggle IDOR vulnerability"
+            aria-pressed="true"
+          >
+            <span></span>
+          </button>
+
+          <span id="toggleState">ON</span>
+        </div>
+      </section>
+
+      <section class="content-grid">
+        <div class="lookup-panel panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Profile Lookup</h2>
+              <p>Request a user profile using their ID.</p>
+            </div>
+            <span class="panel-icon">⌕</span>
+          </div>
+
+          <div class="input-group">
+            <label for="get_user">USER ID</label>
+
+            <div class="input-wrapper">
+              <input
+                type="text"
+                id="get_user"
+                placeholder="Enter User ID (e.g. 1)"
+                autocomplete="off"
+              />
+
+              <button type="button" id="getProfileButton">Get Profile</button>
+            </div>
+          </div>
+
+          <div class="hint">
+            <span>ⓘ</span>
+            <p>
+              Your authenticated user ID is
+              <strong>#1</strong>.
+            </p>
+          </div>
+
+          <div class="result-container" id="result">
+            <div class="empty-state">
+              <span class="empty-icon">⌕</span>
+              <h3>No request yet</h3>
+              <p>Enter a user ID to retrieve their profile.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="info-panel panel">
+          <div class="panel-heading">
+            <div>
+              <h2>Security Analysis</h2>
+              <p>Current access control configuration.</p>
+            </div>
+          </div>
+
+          <div class="analysis-item">
+            <span class="analysis-label">Authentication</span>
+            <span class="analysis-value success">
+              <span class="mini-dot"></span>
+              Authenticated
+            </span>
+          </div>
+
+          <div class="analysis-item">
+            <span class="analysis-label">Authenticated User</span>
+            <span class="analysis-value">User #1</span>
+          </div>
+
+          <div class="analysis-item">
+            <span class="analysis-label">Authorization</span>
+            <span class="analysis-value" id="authorizationStatus">
+              Missing
+            </span>
+          </div>
+
+          <div class="analysis-item">
+            <span class="analysis-label">Access Control</span>
+            <span class="analysis-value danger" id="accessControlStatus">
+              Not Enforced
+            </span>
+          </div>
+
+          <div class="divider"></div>
+
+          <div class="explanation">
+            <h3>What's happening?</h3>
+            <p id="explanationText">
+              The application retrieves profiles based on the supplied ID
+              without checking whether the authenticated user is authorized to
+              access that resource.
+            </p>
+          </div>
+
+          <div class="request-log">
+            <div class="log-heading">
+              <span>Request Log</span>
+              <span class="live-indicator">LIVE</span>
+            </div>
+
+            <div id="requestLog" class="log-content">
+              <p class="log-placeholder">Waiting for a request...</p>
+            </div>
+          </div>
+        </aside>
+      </section>
+
+      <footer>
+        <span>Security Lab</span>
+        <span>IDOR Demonstration · Educational Purposes</span>
+      </footer>
+    </main>
   </body>
 </html>
