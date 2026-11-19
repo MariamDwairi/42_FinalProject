@@ -6,5 +6,15 @@
     <title>IDOR Demonstration</title>
     <script src="./script.js" defer></script>
   </head>
-  <body></body>
+  <body>
+    <label for="get_user">Get My Profile.</label>
+    <input
+      type="text"
+      id="get_user"
+      name="get_user"
+      placeholder="Enter User ID"
+    />
+    <button type="submit" onClick="getUserProfile()">Get Profile</button>
+    <div id="result"></div>
+  </body>
 </html>
