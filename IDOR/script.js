@@ -62,8 +62,6 @@ const statusDescription = document.getElementById("statusDescription");
 const statusIcon = document.getElementById("statusIcon");
 
 const toggleState = document.getElementById("toggleState");
-const authorizationStatus = document.getElementById("authorizationStatus");
-const accessControlStatus = document.getElementById("accessControlStatus");
 const explanationText = document.getElementById("explanationText");
 
 const requestLog = document.getElementById("requestLog");
@@ -75,9 +73,14 @@ function updateSecurityStatus() {
   toggleState.textContent = isVulnerable ? "ON" : "OFF";
   toggleState.style.color = isVulnerable ? "var(--red)" : "var(--green)";
 
+  document.getElementById("codeTitle").textContent =
+  isVulnerable ? "Vulnerable Code" : "Fixed Code";
+  document.getElementById("vulnerableCheck").hidden = !isVulnerable;
+  document.getElementById("guard").hidden = isVulnerable;
+
   if (isVulnerable) {
     statusIcon.textContent = "⚠";
-    statusIcon.style.background = "#422d20";
+    statusIcon.style.background = "#7f1d1d";
     statusIcon.style.color = "var(--yellow)";
 
     statusTitle.textContent = "Vulnerability Detected";
@@ -85,46 +88,34 @@ function updateSecurityStatus() {
     statusDescription.textContent =
       "Users can access other users' profiles by changing the ID.";
 
-    authorizationStatus.textContent = "Missing";
-    authorizationStatus.className = "analysis-value danger";
-
-    accessControlStatus.textContent = "Not Enforced";
-    accessControlStatus.className = "analysis-value danger";
-
     explanationText.textContent =
-      "The application retrieves profiles based on the supplied ID without checking whether the authenticated user is authorized to access that resource.";
-  } else {
+    "When isVulnerable is true, the OR condition grants access even when the requested profile belongs to another user.";  } else {
     statusIcon.textContent = "✓";
-    statusIcon.style.background = "#193222";
+    statusIcon.style.background = "#14532d";
     statusIcon.style.color = "var(--green)";
 
     statusTitle.textContent = "Vulnerability Fixed";
 
     statusDescription.textContent = "Users can only access their own profiles.";
 
-    authorizationStatus.textContent = "Enforced";
-    authorizationStatus.className = "analysis-value safe";
-
-    accessControlStatus.textContent = "Protected";
-    accessControlStatus.className = "analysis-value safe";
-
     explanationText.textContent =
       "The application checks whether the requested profile belongs to the authenticated user before returning any data.";
   }
 }
 
-function logRequest(userId, granted, message) {
+function logRequest(userId, status, message) {
   const timestamp = new Date().toLocaleTimeString();
 
-  const logClass = granted ? "log-success" : "log-error";
+  const logClass = status === "200 OK" ? "log-success" : "log-error";
 
   requestLog.innerHTML = `
         <div class="${logClass}">
-            [${timestamp}] ${granted ? "200 OK" : "403 FORBIDDEN"}
+            [${timestamp}] ${status}
         </div>
-        <div>GET /api/users/${userId}</div>
+        <div>GET /api/users/<span></span></div>
         <div>${message}</div>
     `;
+  requestLog.querySelector("span").textContent = userId;
 }
 
 function getUserProfile() {
@@ -146,11 +137,12 @@ function getUserProfile() {
     results.innerHTML = `
             <div class="error-message">
                 <h3>User Not Found</h3>
-                <p>No user exists with ID #${userId}.</p>
+                <p>No user exists with ID #<span></span>.</p>
             </div>
         `;
 
-    logRequest(userId, false, "Resource not found.");
+    results.querySelector("span").textContent = userId;
+    logRequest(userId, "404 NOT FOUND", "Resource not found.");
     return;
   }
 
@@ -168,14 +160,14 @@ function getUserProfile() {
             </div>
         `;
 
-    logRequest(userId, false, "Authorization check failed. Access denied.");
+    logRequest(userId, "403 FORBIDDEN", "Authorization check failed. Access denied.");
 
     return;
   }
 
-  const accessMessage = isVulnerable
+  const accessMessage = userId !== AUTHENTICATED_USER_ID
     ? "IDOR EXPLOIT: Unauthorized resource access successful."
-    : "Authorized: Resource ownership verified.";
+    : "Own profile returned.";
 
   results.innerHTML = `
         <div class="profile-card">
@@ -188,7 +180,7 @@ function getUserProfile() {
                 <img
                     src="${user.pfp}"
                     alt="Profile picture"
-                    onerror="this.src='https://i.pravatar.cc/150?img=1'"
+                    onerror="this.onerror=null; this.src='https://i.pravatar.cc/150?img=1'"
                 />
 
                 <div>
@@ -219,7 +211,7 @@ function getUserProfile() {
         </div>
     `;
 
-  logRequest(userId, true, accessMessage);
+  logRequest(userId, "200 OK", accessMessage);
 }
 
 toggle.addEventListener("click", () => {
