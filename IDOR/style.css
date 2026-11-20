@@ -1,0 +1,126 @@
+/* Page and cards */
+* { box-sizing: border-box; }
+body {
+    margin: 0; padding: 32px 16px;
+    background: #0f172a; color: #f8fafc;
+    font: 15px/1.6 "Inter", Arial, sans-serif;
+}
+.container { max-width: 1100px; margin: auto; }
+h1, h2, h3, p { margin: 0; }
+h1, h2 { font-size: 20px; }
+h3 { font-size: 16px; }
+p { color: #cbd5e1; }
+button, input { font: inherit; }
+button { cursor: pointer; }
+.panel, .status-panel {
+    min-width: 0; padding: 24px;
+    background: #1e293b; border: 1px solid #334155; border-radius: 12px;
+}
+
+/* Header */
+.site-header {
+    text-align: center;
+    padding-bottom: 0;
+}
+h1, h2 {
+    color: #f8fafc;
+}
+
+h1 {
+    margin: 0;
+}
+
+h2 {
+    margin-top: 0;
+}
+
+h3 {
+    margin-bottom: 8px;
+}
+
+.site-header p {
+    margin: 8px 0;
+    color: #94a3b8;
+}
+
+/* Definition */
+#definition { margin-bottom: 20px; }
+.classification { margin-top: 6px; color: #94a3b8; font-size: 13px; }
+
+/* Vulnerability status and switch */
+.status-panel {
+    --red: #f87171; --green: #4ade80; --yellow: #fecaca;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 16px; margin-bottom: 20px;
+}
+.status-info, .toggle-container { display: flex; align-items: center; gap: 12px; }
+.status-icon { padding: 6px 16px; border-radius: 8px; font-size: 22px; }
+.toggle { width: 44px; padding: 3px; background: #475569; border: 0; border-radius: 20px; }
+.toggle span { display: block; width: 18px; height: 18px; background: white; border-radius: 50%; }
+.toggle.active { background: #f87171; }
+.toggle.active span { transform: translateX(20px); }
+
+/* Profile Lookup */
+.content-grid { display: grid; grid-template-columns: 1.6fr 1fr; gap: 20px; align-items: start; }
+.panel-heading, .input-wrapper { display: flex; justify-content: space-between; gap: 10px; }
+.panel-heading { margin-bottom: 20px; }
+.input-group label, .hint, .panel-icon { color: #94a3b8; }
+.input-group label { display: block; margin-bottom: 6px; font-size: 12px; }
+.input-wrapper input {
+    flex: 1; min-width: 0; padding: 12px;
+    background: #0f172a; color: white; border: 1px solid #475569; border-radius: 7px;
+}
+.input-wrapper button { padding: 10px 16px; background: #0ea5e9; color: #0f172a; border: 0; border-radius: 7px; }
+.hint { display: flex; gap: 8px; margin-top: 12px; font-size: 13px; }
+
+/* Lookup result */
+.result-container { margin-top: 20px; }
+.empty-state {
+    display: grid; align-content: center; min-height: 220px;
+    text-align: center; border: 1px dashed #475569; border-radius: 10px;
+}
+.empty-icon { color: #94a3b8; font-size: 32px; }
+.profile-card, .request-log { background: #0f172a; border: 1px solid #334155; border-radius: 10px; }
+.profile-card { padding: 18px; }
+.profile-header { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; margin: 16px 0; }
+.profile-header img { width: 60px; height: 60px; object-fit: cover; border-radius: 50%; }
+.profile-id { margin-left: auto; }
+.profile-details { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.detail-item { padding: 10px; background: #1e293b; border-radius: 6px; }
+.detail-item span, .bio span { display: block; color: #94a3b8; font-size: 12px; }
+.access-result, .error-message { padding: 12px; border-radius: 7px; }
+.access-result, .fix { background: #14532d; color: #bbf7d0; }
+.error-message, .bug { background: #7f1d1d; color: #fecaca; }
+
+/* Code and What's happening? */
+pre {
+    margin: 0; padding: 14px; background: #020617; border-radius: 8px;
+    font-size: 13px; white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.divider { margin: 18px 0; border-top: 1px solid #334155; }
+
+/* Request Log */
+.request-log { margin-top: 18px; }
+.log-heading { display: flex; justify-content: space-between; padding: 12px; border-bottom: 1px solid #334155; }
+.log-content { padding: 12px; min-height: 80px; font: 13px/1.6 monospace; overflow-wrap: anywhere; }
+.live-indicator, .log-success { color: #4ade80; }
+.log-error { color: #f87171; }
+
+/* Impact, Sources and footer */
+#impact, #sources, footer { margin-top: 20px; }
+#sources ul { margin: 6px 0 0; padding-left: 20px; }
+#sources a { color: #38bdf8; }
+footer { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; color: #94a3b8; font-size: 12px; }
+
+mark {
+    background-color: rgba(14, 165, 233, 0.5);
+    color: #f8fafc;
+    padding: 2px 5px;
+    border-radius: 4px;
+}
+
+/* Mobile */
+@media (max-width: 750px) {
+    .content-grid { grid-template-columns: 1fr; }
+    .panel, .status-panel { padding: 16px; }
+}
