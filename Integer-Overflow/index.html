@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Integer Overflow Lab</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<main>
+<h1>Integer overflow lab</h1>
+<p class="sub">A toy shop that stores the total in a signed 32-bit integer. Everything runs in your browser; nothing is sent anywhere.</p>
+
+<div class="card">
+  <div class="row"><span>Item: Keyboard</span><span class="out">$1,000 each</span></div>
+  <div class="row"><span>Your wallet</span><span class="out" id="wallet">$5,000</span></div>
+
+  <!-- Vulnerable switch -->
+  <div class="switch-row">
+    <input type="checkbox" id="vulnToggle" checked>
+    <label for="vulnToggle">Vulnerable: <strong id="vulnState">ON</strong></label>
+  </div>
+
+  <!-- Each button carries its own quantity in data-qty -->
+  <button class="payload" data-qty="4294967">Payload 1 (negative)</button>
+  <button class="payload" data-qty="4294968">Payload 2 (small positive)</button>
+</div>
+
+<!-- Result box (totals, status, wallet) -->
+<div class="card" id="result" aria-live="polite">
+  <div class="hint">Press a payload button to trigger the overflow. Result appears here.</div>
+</div>
+
+<!-- Explanation box, only shown when the switch is ON -->
+<div class="card" id="explain" style="display:none" aria-live="polite"></div>
+
+<div class="card">
+  <strong>The vulnerable code</strong>
+  <pre>function buy(qty) {
+  const realTotal = PRICE * qty;      // what it should cost
+<span class="hl-bad">  const total = (PRICE * qty) | 0;    // VULNERABLE: wraps to signed 32-bit</span>
+  let status;
+  if (total &lt;= wallet) {
+    wallet -= total;
+    status = "Purchased";
+  } else {
+    status = "Not enough funds";
+  }
+  return { realTotal, total, status };
+}</pre>
+  <p class="hint">The <span class="hl-bad">red line</span> is where the overflow happens.
+  The payloads only work while the <strong>Vulnerable</strong> switch is ON.
+  Reload the page to reset the wallet.</p>
+</div>
+
+<div class="card">
+  <strong>The fix</strong>
+  <pre>function buySafe(qty) {
+  const realTotal = PRICE * qty;      // what it should cost
+<span class="hl-good">  if (!Number.isSafeInteger(qty) || qty &lt; 1 || qty &gt; 100) {   // FIX: reject unreasonable quantities</span>
+    return { realTotal, total: realTotal, status: "Order rejected: quantity exceeds the maximum allowed per customer (100)." };
+  }
+  const total = PRICE * qty;          // no truncation
+  let status;
+  if (total &lt;= wallet) {
+    wallet -= total;
+    status = "Purchased";
+  } else {
+    status = "Not enough funds";
+  }
+  return { realTotal, total, status };
+}</pre>
+  <p class="hint">The <span class="hl-good">green line</span> is the fix. It rejects the quantity
+  before any math happens, so the total can never wrap.</p>
+</div>
+</main>
+
+<script src="script.js"></script>
+</body>
+</html>
