@@ -18,19 +18,20 @@
   </head>
 
   <body>
-        <header class="site-header">
-        <h1>Insecure Direct Object Reference (IDOR)</h1>
-        <p>OWASP A01 · Broken Access Control | CWE-639</p>
-        </header>
+    <header class="site-header">
+      <h1>Insecure Direct Object Reference (IDOR)</h1>
+      <p>OWASP A01 · Broken Access Control | CWE-639</p>
+    </header>
 
     <main class="container">
       <section class="panel" id="definition">
         <h2>Definition</h2>
         <p>
-          Insecure Direct Object Reference (IDOR) happens when an app lets a user
-          access a record without checking if they have permission to see it.
-          In this lab, a signed-in user can see someone else’s profile by entering their ID.
-        </p>             
+          Insecure Direct Object Reference (IDOR) happens when an app lets a
+          user access a record without checking if they have permission to see
+          it. In this lab, a signed-in user can see someone else’s profile by
+          entering their ID.
+        </p>
       </section>
       <section class="status-panel">
         <div class="status-info">
@@ -104,33 +105,27 @@
         </div>
 
         <aside class="info-panel panel">
-          <div class="panel-heading"><h2 id="codeTitle">Vulnerable Code</h2></div>
+          <div class="panel-heading">
+            <h2 id="codeTitle">Vulnerable Code</h2>
+          </div>
           <pre><code>function getProfile(id) {
-  const user = users.find(
-    u =&gt; u.id === id
-  );
-  if (!user) {
-    return { status: 404 };
-  }
-<span id="vulnerableCheck">  const isAuthorized =
-    <mark class="bug">isVulnerable ||</mark> id === AUTHENTICATED_USER_ID;
-  if (!isAuthorized) {
-    return { status: 403 };
-  }
-</span><span id="guard" hidden>  <mark class="fix">if (id !== AUTHENTICATED_USER_ID) {</mark>
-    return { status: 403 };
-  }
-</span>  return { status: 200, user };
-}</code></pre>
+              const user = users.find(
+                u =&gt; u.id === id
+              );
+              if (!user) {
+                return { status: 404 };
+              }
+            <span id="guard" hidden>  <mark class="fix">if (id !== AUTHENTICATED_USER_ID) {</mark>
+                return { status: 403 };
+              }
+            </span><span id="vulnerableCheck">  <mark class="bug">return { status: 200, user };</mark></span><span id="safeReturn" hidden>  return { status: 200, user };</span>
+            }</code></pre>
+
           <div class="divider"></div>
 
           <div class="explanation">
             <h3>What's happening?</h3>
-            <p id="explanationText">
-              The application retrieves profiles based on the supplied ID
-              without checking whether the authenticated user is authorized to
-              access that resource.
-            </p>
+            <p id="explanationText"></p>
           </div>
 
           <div class="request-log">
@@ -146,22 +141,39 @@
         </aside>
       </section>
 
-<!-- Impact -->
-<section id="impact" class="panel">
-    <h2>Impact</h2>
-    <p>
-        IDOR can expose private records, such as personal profiles or financial documents.
-        In <mark>2019</mark>, a journalist reported that changing the document ID in a
-        <mark>First American Title</mark> link let him view other customers’ documents.
-        Some contained Social Security numbers and banking information.
-    </p>
-</section>
+      <!-- Impact -->
+      <section id="impact" class="panel">
+        <h2>Impact</h2>
+        <p>
+          IDOR can expose private records, such as personal profiles or
+          financial documents. In <mark>2019</mark>, a journalist reported that
+          changing the document ID in a <mark>First American Title</mark> link
+          let him view other customers’ documents. Some contained Social
+          Security numbers and banking information.
+        </p>
+      </section>
       <section class="panel" id="sources">
         <h2>Sources</h2>
         <ul>
-          <li><a href="https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html">OWASP · IDOR Prevention Cheat Sheet</a></li>
-          <li><a href="https://cwe.mitre.org/data/definitions/639.html">MITRE · CWE-639, Authorization Bypass Through User-Controlled Key</a></li>
-          <li><a href="https://www.dfs.ny.gov/system/files/documents/2024/10/ea20231127_co_first_american.pdf">New York Department of Financial Services · First American Title consent order (PDF)</a></li>
+          <li>
+            <a
+              href="https://cheatsheetseries.owasp.org/cheatsheets/Insecure_Direct_Object_Reference_Prevention_Cheat_Sheet.html"
+              >OWASP · IDOR Prevention Cheat Sheet</a
+            >
+          </li>
+          <li>
+            <a href="https://cwe.mitre.org/data/definitions/639.html"
+              >MITRE · CWE-639, Authorization Bypass Through User-Controlled
+              Key</a
+            >
+          </li>
+          <li>
+            <a
+              href="https://www.dfs.ny.gov/system/files/documents/2024/10/ea20231127_co_first_american.pdf"
+              >New York Department of Financial Services · First American Title
+              consent order (PDF)</a
+            >
+          </li>
         </ul>
       </section>
       <footer>

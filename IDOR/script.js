@@ -67,17 +67,18 @@ const explanationText = document.getElementById("explanationText");
 const requestLog = document.getElementById("requestLog");
 
 function updateSecurityStatus() {
+  document.getElementById("safeReturn").hidden = isVulnerable;
   toggle.classList.toggle("active", isVulnerable);
   toggle.setAttribute("aria-pressed", String(isVulnerable));
 
   toggleState.textContent = isVulnerable ? "ON" : "OFF";
   toggleState.style.color = isVulnerable ? "var(--red)" : "var(--green)";
 
-  document.getElementById("codeTitle").textContent =
-  isVulnerable ? "Vulnerable Code" : "Fixed Code";
+  document.getElementById("codeTitle").textContent = isVulnerable
+    ? "Vulnerable Code"
+    : "Fixed Code";
   document.getElementById("vulnerableCheck").hidden = !isVulnerable;
   document.getElementById("guard").hidden = isVulnerable;
-
   if (isVulnerable) {
     statusIcon.textContent = "⚠";
     statusIcon.style.background = "#7f1d1d";
@@ -89,7 +90,8 @@ function updateSecurityStatus() {
       "Users can access other users' profiles by changing the ID.";
 
     explanationText.textContent =
-    "When isVulnerable is true, the OR condition grants access even when the requested profile belongs to another user.";  } else {
+      " The application checks if the requested user exists, but does not check if the authenticated user has permission to access their profile.";
+  } else {
     statusIcon.textContent = "✓";
     statusIcon.style.background = "#14532d";
     statusIcon.style.color = "var(--green)";
@@ -102,7 +104,6 @@ function updateSecurityStatus() {
       "The application checks whether the requested profile belongs to the authenticated user before returning any data.";
   }
 }
-
 function logRequest(userId, status, message) {
   const timestamp = new Date().toLocaleTimeString();
 
@@ -160,14 +161,19 @@ function getUserProfile() {
             </div>
         `;
 
-    logRequest(userId, "403 FORBIDDEN", "Authorization check failed. Access denied.");
+    logRequest(
+      userId,
+      "403 FORBIDDEN",
+      "Authorization check failed. Access denied.",
+    );
 
     return;
   }
 
-  const accessMessage = userId !== AUTHENTICATED_USER_ID
-    ? "IDOR EXPLOIT: Unauthorized resource access successful."
-    : "Own profile returned.";
+  const accessMessage =
+    userId !== AUTHENTICATED_USER_ID
+      ? "IDOR EXPLOIT: Unauthorized resource access successful."
+      : "Own profile returned.";
 
   results.innerHTML = `
         <div class="profile-card">

@@ -1,163 +1,207 @@
 /* --- Global Reset & Colors (same as home page) --- */
 * {
-    box-sizing: border-box;
-    margin: 0;
-    padding: 0;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 }
 
 body {
-    background-color: #0f172a;
-    color: #f8fafc;
-    line-height: 1.6;
-    padding-bottom: 2rem;
+  background-color: #0f172a;
+  color: #f8fafc;
+  line-height: 1.6;
+  padding-bottom: 2rem;
 }
 
 /* --- Header & Navigation (optional, if you add the same header to the lab) --- */
 header {
-    background-color: #1e293b;
-    border-bottom: 1px solid #334155;
-    padding: 1rem 2rem;
-    text-align: center;
+  background-color: #1e293b;
+  border-bottom: 1px solid #334155;
+  padding: 1rem 2rem;
+  text-align: center;
 }
 
 nav {
-    display: inline-block;
+  display: inline-block;
 }
 
 nav a {
-    color: #94a3b8;
-    text-decoration: none;
-    font-size: 0.95rem;
-    font-weight: 500;
-    margin: 0 0.5rem;
-    transition: color 0.2s;
+  color: #94a3b8;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  margin: 0 0.5rem;
+  transition: color 0.2s;
 }
 
 nav a:hover,
 nav a:first-child {
-    color: #38bdf8;
+  color: #38bdf8;
 }
 
 /* --- Page layout --- */
 main {
-    max-width: 700px;
-    margin: 0 auto;
-    padding: 3rem 1.5rem 1rem 1.5rem;
+  max-width: 700px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 1rem 1.5rem;
 }
 
 h1 {
-    font-size: 2.2rem;
-    margin-bottom: 0.75rem;
-    color: #f8fafc;
+  font-size: 2.2rem;
+  margin-bottom: 0.75rem;
+  color: #f8fafc;
 }
 
 p.sub {
-    color: #94a3b8;
-    font-size: 1rem;
-    margin-bottom: 1.5rem;
+  color: #94a3b8;
+  font-size: 1rem;
+  margin-bottom: 1.5rem;
 }
 
 /* --- Cards --- */
 .card {
-    background-color: #1e293b;
-    border: 1px solid #334155;
-    border-radius: 6px;
-    padding: 1.8rem;
-    margin: 1.5rem 0;
-    transition: border-color 0.2s;
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 1.8rem;
+  margin: 1.5rem 0;
+  transition: border-color 0.2s;
 }
 
 .card:hover {
-    border-color: #38bdf8;
+  border-color: #38bdf8;
 }
 
 .card strong {
-    display: block;
-    font-size: 1.2rem;
-    margin-bottom: 0.75rem;
-    color: #f8fafc;
+  display: block;
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+  color: #f8fafc;
 }
 
 /* --- Rows & output --- */
 .row {
-    display: flex;
-    justify-content: space-between;
-    gap: 1rem;
-    padding: 0.35rem 0;
-    border-bottom: 1px solid #334155;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.35rem 0;
+  border-bottom: 1px solid #334155;
 }
 
 .row:last-of-type {
-    border-bottom: none;
+  border-bottom: none;
 }
 
 .out {
-    font-family: ui-monospace, Menlo, Consolas, monospace;
-    font-size: 0.9rem;
-    color: #38bdf8;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.9rem;
+  color: #38bdf8;
 }
 
 .bad {
-    color: #f87171;
-    font-weight: bold;
-    margin-top: 0.75rem;
+  color: #f87171;
+  font-weight: bold;
+  margin-top: 0.75rem;
 }
 
 .hint {
-    color: #94a3b8;
-    font-size: 0.9rem;
-    margin-top: 0.75rem;
+  color: #94a3b8;
+  font-size: 0.9rem;
+  margin-top: 0.75rem;
 }
 
 /* --- Code blocks --- */
 pre {
-    overflow-x: auto;
-    background-color: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 4px;
-    padding: 1rem;
-    font-family: ui-monospace, Menlo, Consolas, monospace;
-    font-size: 0.8rem;
-    color: #f8fafc;
+  overflow-x: auto;
+  background-color: #0f172a;
+  border: 1px solid #334155;
+  border-radius: 4px;
+  padding: 1rem;
+  font-family: ui-monospace, Menlo, Consolas, monospace;
+  font-size: 0.8rem;
+  color: #f8fafc;
 }
 
 /* --- Buttons (same look as .btn on the home page) --- */
 button {
-    display: inline-block;
-    margin-top: 1rem;
-    background-color: #38bdf8;
-    color: #0f172a;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 0.9rem;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color 0.2s;
+  display: inline-block;
+  margin-top: 1rem;
+  background-color: #38bdf8;
+  color: #0f172a;
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-weight: bold;
+  font-size: 0.9rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.2s;
 }
 
 button:hover {
-    background-color: #0ea5e9;
+  background-color: #0ea5e9;
 }
 
 button:focus-visible {
-    outline: 3px solid #38bdf8;
-    outline-offset: 2px;
+  outline: 3px solid #38bdf8;
+  outline-offset: 2px;
 }
 button + button {
-    margin-left: 0.75rem;
+  margin-left: 0.75rem;
 }
 /* --- Highlighted lines in the code boxes --- */
 .hl-bad {
-    background-color: rgba(248, 113, 113, 0.25);
-    border-left: 3px solid #f87171;
-    padding: 0.1rem 0.4rem 0.1rem 0.25rem;
+  background-color: rgba(248, 113, 113, 0.25);
+  border-left: 3px solid #f87171;
+  padding: 0.1rem 0.4rem 0.1rem 0.25rem;
 }
 
 .hl-good {
-    background-color: rgba(74, 222, 128, 0.2);
-    border-left: 3px solid #4ade80;
-    padding: 0.1rem 0.4rem 0.1rem 0.25rem;
+  background-color: rgba(74, 222, 128, 0.2);
+  border-left: 3px solid #4ade80;
+  padding: 0.1rem 0.4rem 0.1rem 0.25rem;
+}
+
+/* --- Impact & Sources --- */
+#impact,
+#sources {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 6px;
+  padding: 1.8rem;
+  margin: 1.5rem 0;
+}
+
+#impact h2,
+#sources h2 {
+  font-size: 1.2rem;
+  margin-bottom: 0.75rem;
+}
+
+#impact:hover,
+#sources:hover {
+  border-color: #38bdf8;
+}
+
+#impact mark {
+  background-color: rgba(14, 165, 233, 0.5);
+  color: #f8fafc;
+  padding: 2px 5px;
+  border-radius: 4px;
+}
+
+/* --- Sources --- */
+#sources {
+  width: calc(100% - 3rem);
+  max-width: 652px;
+  margin: 0 auto 1.5rem;
+}
+
+#sources ul {
+  padding-left: 20px;
+}
+
+#sources a {
+  color: #38bdf8;
 }
